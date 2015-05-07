@@ -1,11 +1,3 @@
-/**
- * Copyright (C) 2012 30ideas (http://30ide.as)
- * MIT licensed
- * 
- * @author Josemando Sobral
- * @created Jul 2nd, 2012.
- * improved by Hongbo LU
- */
 package com.darktalker.cordova.screenshot;
 
 import java.io.ByteArrayOutputStream;
@@ -102,7 +94,7 @@ public class Screenshot extends CordovaPlugin {
 
 		if (action.equals("saveScreenshot")) {
 			final String format = (String) args.get(0);
-			final Integer quality = (Integer) args.get(1);
+			final Integer quality = Math.round((Float.parseFloat(args.get(1).toString()))*100);
 			final String fileName = (String)args.get(2);
 
 			super.cordova.getActivity().runOnUiThread(new Runnable() {
@@ -112,19 +104,27 @@ public class Screenshot extends CordovaPlugin {
 					try {
 						if(format.equals("png") || format.equals("jpg")){
 							Bitmap bitmap = getBitmap();
-							File folder = new File(Environment.getExternalStorageDirectory(), "Pictures");
+							Bitmap thumbBmp ;
+							File folder = new File(Environment.getExternalStorageDirectory(), "img");
 							if (!folder.exists()) {
 								folder.mkdirs();
 							}
 
 							File f = new File(folder, fileName + "."+format);
-
+							File thumb = new File(folder, "thumb-"+fileName + "."+format);
 							FileOutputStream fos = new FileOutputStream(f);
+							FileOutputStream fosThumb = new FileOutputStream(thumb);
 							if(format.equals("png")){
 								bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
 							}
 							if(format.equals("jpg")){
 								bitmap.compress(Bitmap.CompressFormat.JPEG, quality == null?100:quality, fos);
+								thumbBmp = Bitmap.createScaledBitmap(bitmap,
+										320,480,
+//										Integer.parseInt(String.valueOf(Math.round(bitmap.getWidth()*0.2))), 
+//										Integer.parseInt(String.valueOf(Math.round(bitmap.getHeight()*0.2))), 
+										true);
+								thumbBmp.compress(Bitmap.CompressFormat.JPEG, 100, fosThumb);
 							}
 							JSONObject jsonRes = new JSONObject();
 							jsonRes.put("filePath",f.getAbsolutePath());

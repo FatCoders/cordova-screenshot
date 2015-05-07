@@ -16,5 +16,5 @@
 
 //- (void)saveScreenshot:(NSArray*)arguments withDict:(NSDictionary*)options;
 - (void)saveScreenshot:(CDVInvokedUrlCommand*)command;
-
+-(UIImage *) imageCompressForWidth:(UIImage *)sourceImage targetWidth:(CGFloat)defineWidth;
 @end
