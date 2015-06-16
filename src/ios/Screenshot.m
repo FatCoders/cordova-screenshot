@@ -61,7 +61,7 @@
     UIImage *image =UIGraphicsGetImageFromCurrentImageContext();
     NSData *imageData = UIImageJPEGRepresentation(image,[quality floatValue]);
     [imageData writeToFile:jpgPath atomically:NO];
-    image = [self imageCompressForWidth:UIGraphicsGetImageFromCurrentImageContext() targetWidth:320];
+    image = [self imageCompressForWidth:UIGraphicsGetImageFromCurrentImageContext() targetWidth:100];
     imageData = UIImageJPEGRepresentation(image,[quality floatValue]);
     [imageData writeToFile:thumbPath atomically:NO];
 
