@@ -120,7 +120,7 @@ public class Screenshot extends CordovaPlugin {
 							if(format.equals("jpg")){
 								bitmap.compress(Bitmap.CompressFormat.JPEG, quality == null?100:quality, fos);
 								thumbBmp = Bitmap.createScaledBitmap(bitmap,
-										320,480,
+										80,120,
 //										Integer.parseInt(String.valueOf(Math.round(bitmap.getWidth()*0.2))), 
 //										Integer.parseInt(String.valueOf(Math.round(bitmap.getHeight()*0.2))), 
 										true);
